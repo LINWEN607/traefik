@@ -1,0 +1,34 @@
+# 如果kube-proxy使用的是IPVS模式，你需要启用staticARP
+[root@k8s-master MetalLB]# kubectl edit configmap -n kube-system kube-proxy
+# 设置staticARP为true
+mode: "ipvs"
+ipvs:
+  strictARP: true
+# 创建资源
+[root@k8s-master MetalLB]# kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.5/config/manifests/metallb-native.yaml
+# 查看资源
+[root@k8s-master MetalLB]# kubectl get pod -n metallb-system 
+NAME                          READY   STATUS    RESTARTS   AGE
+controller-79d46b9996-thtw2   1/1     Running   0          2m35s
+speaker-9r59c                 1/1     Running   0          2m34s
+speaker-shdvj                 1/1     Running   0          2m34s
+speaker-w4g96                 1/1     Running   0          2m34s
+# 设置ip地址池
+[root@k8s-master MetalLB]# cat config.yaml 
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: first-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 192.168.10.200-192.168.10.250   #局域网，ip要在同一网段
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: example
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - first-pool
