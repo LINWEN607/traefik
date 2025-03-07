@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: myapp1
+spec:
+  entryPoints:
+  - web
+  routes:
+  - match: Host(`myapp1.test.com`) # 域名
+    kind: Rule
+    services:
+      - name: myapp1  # 与svc的name一致
+        port: 80      # 与svc的port一致
