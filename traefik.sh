@@ -7,7 +7,7 @@
 # 创建traefik名称空间
 kubectl create ns traefik
 # 安装traefik
-helm install --namespace=traefik traefik traefik/traefik
+helm install traefik . -n traefik -f values.yaml
 # 查看helm列表
 helm list -n traefik
 # 查看pod资源信息
