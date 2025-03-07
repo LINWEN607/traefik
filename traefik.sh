@@ -12,3 +12,6 @@ helm install --namespace=traefik traefik traefik/traefik
 helm list -n traefik
 # 查看pod资源信息
 kubectl get pod -n traefik
+#HTTPS域名路由(自有证书)
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout tls.key -out tls.crt -subj "/CN=myapp2.test.com"
+
