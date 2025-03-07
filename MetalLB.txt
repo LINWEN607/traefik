@@ -14,7 +14,7 @@ speaker-9r59c                 1/1     Running   0          2m34s
 speaker-shdvj                 1/1     Running   0          2m34s
 speaker-w4g96                 1/1     Running   0          2m34s
 # 设置ip地址池
-[root@k8s-master MetalLB]# cat config.yaml 
+[root@k8s-master MetalLB]# vi config.yaml 
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
